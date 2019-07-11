@@ -118,9 +118,11 @@ class FreshList extends Component {
             }) 
         })
     }
+    
     _event(params) {  
         this.props.event && this.props.event(params)
     }
+
     _footer = () =>{ 
         return (
             <View style={{alignItems: 'center', margin: 5}}> 

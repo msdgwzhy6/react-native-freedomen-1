@@ -91,40 +91,39 @@ render() {
                    } 
         		}} 
                 columns={[   
-                  {type: 'slider', value: .2, prop: 'slider', style: {padding: 5}},
-                  {type: 'text', value: '2%', prop: 'slit'},
-                  {type: 'progress', value: .9, prop: 'progress',  style: {width: 420, padding: 5}},
-                  {type: 'pickdate', placeholder: '请选择时间', prop: 'pickdate', style: {padding: 5}},
-                  [
-                      {type: 'checkbox', prop: 'checkbox', value: false,  style: {padding: 5} },
-                      {type: 'radio', prop: 'radio', value: false,  style: {borderRadius: 40, padding: 5} },
-                      {type: 'text-badge', value: 8, prop: 'badge1'}, 
-                      {type: 'text-badge', value: 1, filter: value => {return value> 99 ? '99+': value}, prop: 'badge2'}, 
-                      {type: 'switch', value: false, prop: 'switch'},
-                      {type: 'text', value: '标签', prop: 'biaoqian', style: {padding: 2, color: '#FF4949', borderColor: '#FF4949', borderWidth: 1}},
-                      {type: 'button-text', value: '按钮', style: { margin: 5, padding: 10, paddingLR: 15, backgroundColor: '#13CE66', color: 'white'}},
-                      {type: 'button-text', value: '按钮', style: { margin: 5, padding: 5, borderRadius: 12, paddingLR: 10, backgroundColor: '#F7BA2A', color: 'white'}},
-                      {type: 'button-image', value: require('./assets/img_button.png'), style: {width: 40, height: 40}},
-                      {type: 'br', style: {flexDirection: 'row', alignItems: 'center'}}
-                  ],
-                  {type: 'select', options: '吃,喝,玩,乐', placeholder: '请选择', prop: 'select', style: {padding: 5}},
-                  {type: 'tags',value:'玩', options: '吃,喝,玩,乐', prop: 'tags1', style: {padding: 5}},
-                  {type: 'tags', value:'乐什么', options: '吃什么,喝什么,玩什么,乐什么', size: 2, prop: 'tags2', style: { padding: 5, borderRadius: 0}},
-                  {type: 'counter', value: 1, max: 50, min: 1, prop: 'counter', style: {padding: 5}},
-                  {type: 'radios', options: "男生1, 女生3", prop: 'radios1', style: {padding: 5}}, 
-                  {type: 'radios', options: "男生1, 女生3", prop: 'radios2', style: {padding: 5, borderRadius: 40}}, 
-                  {type: 'checkboxs',   options: "男生, 女生,未定", prop: 'checkboxs', style: {margin: 5, alignItems: 'center'}}, 
-                  {type: 'input-text', prop: 'input', maxLength: 12, placeholder: '请输入用户名', style: {borderColor: '#ccc', borderWidth: 1, padding: 20, margin: 5}},
-                  {type: 'input-password', prop: 'password', maxLength: 12,   placeholder: '请输入密码', style: {borderColor: '#ccc', borderWidth: 1, padding: 10, margin: 5}},
-                  {type: 'rate', prop: 'rate',  value: 1 , style: {padding: 5}},  
-                  {type: 'button-cancel', value: 'SlidePop', prop: 'slidPop',style: { margin: 5}},
-                  {type: 'button-primary', value: '填充', prop: 'submit',style: { margin: 5}},
-                  {type: 'br', style: {padding: 10}}
+                      {type: 'slider', value: .2, prop: 'slider', style: {padding: 5}},
+                      {type: 'text', value: '2%', prop: 'slit'},
+                      {type: 'progress', value: .9, prop: 'progress',  style: {width: 420, padding: 5}},
+                      {type: 'pickdate', placeholder: '请选择时间', prop: 'pickdate', style: {padding: 5}},
+                      [
+                          {type: 'checkbox', prop: 'checkbox', value: false,  style: {padding: 5} },
+                          {type: 'radio', prop: 'radio', value: false,  style: {borderRadius: 40, padding: 5} },
+                          {type: 'text-badge', value: 8, prop: 'badge1'}, 
+                          {type: 'text-badge', value: 1, filter: value => {return value> 99 ? '99+': value}, prop: 'badge2'}, 
+                          {type: 'switch', value: false, prop: 'switch'},
+                          {type: 'text', value: '标签', prop: 'biaoqian', style: {padding: 2, color: '#FF4949', borderColor: '#FF4949', borderWidth: 1}},
+                          {type: 'button-text', value: '按钮', style: { margin: 5, padding: 10, paddingLR: 15, backgroundColor: '#13CE66', color: 'white'}},
+                          {type: 'button-text', value: '按钮', style: { margin: 5, padding: 5, borderRadius: 12, paddingLR: 10, backgroundColor: '#F7BA2A', color: 'white'}},
+                          {type: 'button-image', value: require('./assets/img_button.png'), style: {width: 40, height: 40}},
+                          {type: 'br', style: {flexDirection: 'row', alignItems: 'center'}}
+                      ],
+                      {type: 'select', options: '吃,喝,玩,乐', placeholder: '请选择', prop: 'select', style: {padding: 5}},
+                      {type: 'tags',value:'玩', options: '吃,喝,玩,乐', prop: 'tags1', style: {padding: 5}},
+                      {type: 'tags', value:'乐什么', options: '吃什么,喝什么,玩什么,乐什么', size: 2, prop: 'tags2', style: { padding: 5, borderRadius: 0}},
+                      {type: 'counter', value: 1, max: 50, min: 1, prop: 'counter', style: {padding: 5}},
+                      {type: 'radios', options: "男生1, 女生3", prop: 'radios1', style: {padding: 5}}, 
+                      {type: 'radios', options: "男生1, 女生3", prop: 'radios2', style: {padding: 5, borderRadius: 40}}, 
+                      {type: 'checkboxs',   options: "男生, 女生,未定", prop: 'checkboxs', style: {margin: 5, alignItems: 'center'}}, 
+                      {type: 'input-text', prop: 'input', maxLength: 12, placeholder: '请输入用户名', style: {borderColor: '#ccc', borderWidth: 1, padding: 20, margin: 5}},
+                      {type: 'input-password', prop: 'password', maxLength: 12,   placeholder: '请输入密码', style: {borderColor: '#ccc', borderWidth: 1, padding: 10, margin: 5}},
+                      {type: 'rate', prop: 'rate',  value: 1 , style: {padding: 5}},  
+                      {type: 'button-cancel', value: 'SlidePop', prop: 'slidPop',style: { margin: 5}},
+                      {type: 'button-primary', value: '填充', prop: 'submit',style: { margin: 5}},
+                      {type: 'br', style: {padding: 10}}
                 ]}
             />
          </ScrollView>
-            
-          )
+      	)
     }
 ```
 
@@ -304,3 +303,6 @@ render() {
 # 文档地址
 
 [documents](http://115.159.65.195:8080/freedomen)
+
+# 稳定版本
+	0.2.4

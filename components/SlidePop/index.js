@@ -78,7 +78,7 @@ export default class extends Component {
         }, () => {
             Animated.timing(this._to, {
                 toValue: 0,
-                duration: this.props.time ?  this.props.time * .8 : duration < 260 ? 260 : duration,//240, 
+                duration: this.props.time ? parseInt(this.props.time * .8) : duration < 260 ? 260 : duration,//240, 
                 easing: Easing.out(Easing.ease),
             }).start()
         })

@@ -51,7 +51,7 @@ export default class extends Base {
                     <Text style={[
                         {color: this.state.value? theme.color.optionColor: theme.color.placeholder}, theme.external[this.props.item.type], this.state.value && util.makeStyle(this.style, 'fontSize', 'color')]}>
                         {
-                            this.props.item.filter ? this._filter() : this.state.value || this.state.placeholder
+                            this.props.item.filter ? this.filter : this.state.value || this.state.placeholder
                         }
                     </Text>
                 </TouchableOpacity>

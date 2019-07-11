@@ -6,11 +6,13 @@ export default class Base extends React.Component {
     innerChange = false
     
     shouldComponentUpdate(nextProps) {   
+        let flag = false
         //内部值变化
         if (this.innerChange){
+            
             this.innerChange = false
            
-            return true
+            flag = true
         }
 
         //style是否有变化
@@ -20,43 +22,47 @@ export default class Base extends React.Component {
            
             if (!util.equals(this.nextStyle, this.style)) { //need compare  
                 this.style = this.nextStyle 
-                return true
+                flag = true
             }  
         }
 
         //option是否有变化
         if (nextProps.item.options) {
+
             this.nextOptions = this._options(nextProps.item.options)
+
             if (!util.equals(this.nextOptions, this.options)) { //need compare 
                 this.options = this.nextOptions  
-                return true
+                flag = true
             }  
         }
 
         //disabled是否有变化
         if (nextProps.item.disabled) {
+
             this.nextDisabled = this._disabled(nextProps.item.disabled, nextProps.item.value, nextProps.item.data)
+
             if (this.nextDisabled !== this.disabled) { //need compare 
                 this.disabled = this.nextDisabled  
-                return true
+                flag = true
             }  
         } 
 
         //filter是否有变化, filter 优先级高于 value
         if (nextProps.item.filter) {
-           
+
             this.nextFilter = this._filter(nextProps.item.filter, nextProps.item.value, nextProps.item.$data)
 
             if (!util.equals(this.nextFilter, this.filter)) { //need compare 
                 this.filter = this.nextFilter 
-                return true
+                flag = true
             }  
             
         } else if (!util.equals(this._resetValue ? this._resetValue(nextProps.item.value) : nextProps.item.value, this.state.value)) {
-            return true 
+            flag = true
         }
         
-        return false
+        return flag
     }
 
     _filter = (filter, value, data) =>  { 
@@ -68,9 +74,9 @@ export default class Base extends React.Component {
         } 
 
         let obj
-        if (typeof filter == 'function')
+        if (typeof filter == 'function') {
             obj = filter(value, data) 
-
+        }
         if (util.isPlainObject(obj)) 
             return obj[value]
         else return obj

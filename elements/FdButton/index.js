@@ -28,21 +28,11 @@ export default class extends Base {
         this.disabled ? style.backgroundColor = theme.color.disableColor  :  ''
         if (util.startWith(item.type, 'button-image')) {
 
-            jsx = <FdImage item={{
-                type: item.type,
-                value: item.value,
-                style: style,
-                data: item.$data
-            }} />
+            jsx = <FdImage item={item} />
 
         } else if (util.startWith(item.type, 'button')) {
             
-            jsx = <FdText item={{
-                type: item.type,
-                value: item.value,
-                style: style,
-                data: item.$data
-            }} />
+            jsx = <FdText item={item} />
 
         }
         return jsx
@@ -76,7 +66,8 @@ export default class extends Base {
                     this._press('press')
                 }} onLongPress={() => {
                     this._press('longPress')
-                }}> 
+                }}
+                {...this.props.item.others}> 
                     {jsx} 
             </TouchableOpacity> 
             : jsx

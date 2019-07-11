@@ -18,22 +18,28 @@ export default class extends Component {
             data: nextProps.data,
         })
     } 
-    _event = (params) => {
+    _event = (params, index) => {
         return this.props.event && this.props.event({
             prop: this.props.prop,
             type: 'views', 
             value: params,
-            row: this.state.data
+            row: this.state.data,
+            index: index
         })
+    }
+    _fresh = (newData, index) => {
+        let data = this.state.data
+        data[index] = newData
+        this.setState({data: data})
     }
     render () {
         let { columns, data } = this.state
          
         let  jsx = data.map((d, index) => {
-            return <Region  columns={columns} data={d} key={index} event={this._event} /> 
+            return <Region  columns={columns} data={d} key={index} event={(params) => {this._event(params, index)}} /> 
         }) 
 
-        return <View style={[{flexDirection: this.props.type == 'view-x' ? 'row': 'column'}, this.props.style]}>
+        return <View style={[{flexDirection: this.props.type == 'view-x' ? 'row': 'column'}, this.props.style]} {...this.props.others}>
             {
                 jsx
             }
