@@ -130,7 +130,7 @@ export default class extends Base {
                                 this.style
                             ]}>
                         <TouchableOpacity 
-                        style={{
+                            style={{
                                 paddingLeft: 5,
                                 paddingRight: 5,
                                 flex: 1,

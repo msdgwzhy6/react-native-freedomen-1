@@ -81,6 +81,7 @@ function custom(obj1 = {}, obj2 = {}, obj3 = {}) {
         fontSize: size.primarySize,
         textAlignVertical:'center',
         backgroundColor: color.primaryColor, 
+      
     }
 
     external['button-cancel'] = {

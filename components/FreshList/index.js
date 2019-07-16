@@ -170,6 +170,7 @@ class FreshList extends Component {
                         ({item, key}) => <Region data = {item} key={key} columns={columns} event={this.props.event} />
                     }
                     ListFooterComponent={this._footer}
+                    {...this.props.others}
                 /> 
         )
     }

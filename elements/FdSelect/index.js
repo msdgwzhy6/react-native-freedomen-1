@@ -25,14 +25,14 @@ class FdSelect extends Base {
  
     _optionItem = (options) =>{
         return options.map((option, i) => {
-            return <Picker.Item key={i} label={option.label} value={option.value} />
+            return <Picker.Item key={i} label={option.label} value={option.value}  />
         })
     }
 
     render () { 
         return (
             <Picker
-                selectedValue={this.state.value}
+                selectedValue={this.state.value} 
                 {...this.props.item.others}
                 style={[theme.external[this.props.item.type], this.style]}
                 onValueChange={this._change}>

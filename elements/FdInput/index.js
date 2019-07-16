@@ -34,7 +34,7 @@ export default class FdInput extends Base {
         })
     } 
 
-    render () { 
+    render () {  
         return (  
             util.startWith('input-area', this.props.item.type)
             ? 
@@ -47,10 +47,11 @@ export default class FdInput extends Base {
                     autoCorrect={false}  
                     multiline = {true}
                     maxLength={this.props.item.maxLength}
+                    numberOfLines = {3 || this.props.item.row || this.props.item.numberOfLines}
                     underlineColorAndroid={'transparent'}
                     style={[
                         {textAlignVertical: 'top', padding: 0}, 
-                        theme.external[this.props.item.type],  
+                        util.makeStyle(theme.external[this.props.item.type], ...styleItems),  
                         util.makeStyle(this.style, ...styleItems)
                     ]} 
                     {...this.props.item.others}
@@ -59,7 +60,7 @@ export default class FdInput extends Base {
                     {
                         this.props.item.maxLength ? 
                         <Text style={[{textAlign: 'right', color: theme.color.placeholder}, util.makeStyle(this.style, 'color', 'fontSize')]}>
-                            {(this.state.value + '').length + ' / ' + this.props.item.maxLength}
+                            {(this.state.value || '').length + ' / ' + this.props.item.maxLength}
                         </Text> : null
                     }
             </View>
@@ -77,7 +78,7 @@ export default class FdInput extends Base {
                     maxLength={this.props.item.maxLength}
                     secureTextEntry={this.props.item.type === 'input-password'}
                     clearButtonMode={'while-editing'} 
-                    style={[{padding: 0}, theme.external[this.props.item.type],  util.makeStyle(this.style, ...styleItems)]} 
+                    style={[{padding: 0}, util.makeStyle(theme.external[this.props.item.type], ...styleItems),  util.makeStyle(this.style, ...styleItems)]} 
                     value={this.state.value}  
                     onChangeText={this._change}/>
             </View>

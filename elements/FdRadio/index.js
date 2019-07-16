@@ -66,7 +66,8 @@ export default class extends Base {
                 <Animated.View style={[
                         {
                             borderWidth: 2, 
-                            borderColor: theme.color.primaryColor, 
+                            borderColor: theme.color.primaryColor,
+                            borderRadius: 25,
                             height: theme.size.smallHeight, 
                             width: theme.size.smallHeight, 
                             padding: theme.size.smallHeight < 26 ? 2 : 5
@@ -79,7 +80,7 @@ export default class extends Base {
                 {
                     this.state.value  ? 
                         <View style={[
-                                {backgroundColor: theme.color.primaryColor, flex: 1}, 
+                                {backgroundColor: theme.color.primaryColor, borderRadius: 20, flex: 1}, 
                                 util.makeStyle(theme.external[this.props.item.type], 'borderRadius'),
                                 util.makeStyle(this.style, 'borderRadius'),
                             ]} 

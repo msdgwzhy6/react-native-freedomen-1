@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, ImageBackground, TouchableOpacity } from 'react-native'
-import Elements from '../../elements' 
+import elements from '../../elements' 
 import Containers from '../../containers'
 import Swipeout from 'react-native-swipeout'
 import Scroll from '../Scroll/index' 
@@ -8,12 +8,10 @@ import Views from '../Views/index'
 import util from '../../utils/util'    
 import theme from '../../config/theme'
 const funMap = {}
-const noWrapper = ['button', 'text', 'checkboxs', 'radios', 'input', 'pick', 'view', 'scroll', 'tags', 'select', 'image']
- 
-/**
- * items: [id]prop, value, [f]event, [f]load
- * 
- */
+const noWrapper = ['button', 'text', 'checkbox', 'checkboxs', 'radio', 'radios', 'input', 'pick', 'view', 'scroll', 'tags', 'select', 'image']
+const multi = new Map()
+multi.set('view', Views)
+multi.set('scroll', Scroll)
 
 class Region extends Component {
     //全局状态管理
@@ -103,6 +101,7 @@ class Region extends Component {
     }
 
     _getColumns(columns, data) {
+        //init fn keys
         this.fnKey = 0
         return this._resetColumns(columns, data)
     }
@@ -153,6 +152,7 @@ class Region extends Component {
             })
         }
     }
+
     _tagHasColumnsEvent = (params, el) => {
         let newData = this.props.event && this.props.event(params) 
                         
@@ -168,126 +168,56 @@ class Region extends Component {
             }
             
             this._fresh(this, data) 
-        } else {
+        } else if (newData != void 0) {
             console.warn('暫不支持')
         }
     }
+
     _tag = (el, index) => {
-        let tag    
-        el.type = el.type || ""
+        let type, _index = el.type.indexOf('-')
 
-        if(el.type.indexOf('input') === 0) {
-            tag = <Elements.FdInput key={index} key={el.prop || index} ref={el.prop} change={this._change} item={el}/>
-            this.inputs.push(el.prop)
-
-        } else if (el.type.indexOf('counter') === 0) {
-
-            tag = <Elements.FdCounter key={el.prop || index} change={this._change} item={el}/>
-
-        } else if (el.type.indexOf('view') === 0) {
-
-            tag = <Views 
-                    key={el.prop || index} 
-                    others={el.others}
-                    event={params => {this._tagHasColumnsEvent(params, el)}}
-                    style={el.style} 
-                    columns={el.columns} 
-                    data={el.value} 
-                    type={el.type}
-                />
-
-        } else if (el.type.indexOf('scroll') === 0) {
-
-            tag = <Scroll  
-                    key={el.prop || index}
-                    others={el.others}
-                    event={params => {this._tagHasColumnsEvent(params, el)}}
-                    style={el.style} 
-                    columns={el.columns} 
-                    data={el.value} 
-                    type={el.type}
-                />
-
-        } else if (el.type.indexOf('tags') === 0) {
-
-            tag = <Elements.FdTags key={el.prop || index} change={this._change} item={el}/>
-
-        } else if (el.type.indexOf('text') === 0) {
-
-            tag = <Elements.FdText event={this._event}  key={el.prop || index} item={el}/>
-
-        } else if (el.type.indexOf('images') === 0) {
-
-            tag = <Elements.FdImages key={el.prop || index} item={el} event={this._event}/>
-
-        } else if (el.type.indexOf('image') === 0) {
-
-            tag = <Elements.FdImage key={el.prop || index} item={el} />
-
-        } else if (el.type.indexOf('menu') === 0) {
-
-            tag = <Elements.FdMenu key={el.prop || index} item={el} event={this._event}/>
-
-        } else if (el.type.indexOf('checkboxs') === 0) {
-
-            tag = <Elements.FdCheckBoxs key={el.prop || index} item={el} change={this._change} />
-
-        } else if (el.type.indexOf('checkbox') === 0) {
-
-            tag = <Elements.FdCheckBox key={el.prop || index} item={el} change={this._change} />
-
-        } else if (el.type.indexOf('rate') === 0) {
-
-            tag = <Elements.FdRate key={el.prop || index} item={el} change={this._change} />
-            
-        } else if (el.type.indexOf('select') === 0) {
-
-            tag = <Elements.FdSelect key={el.prop || index} change={this._change} item={el} />
-
-        } else if (el.type.indexOf('slider') === 0) {
-
-            tag = <Elements.FdSlider key={el.prop || index} change={this._change} item={el} />
-
-        } else if (el.type.indexOf('radios') === 0) {
-
-            tag = <Elements.FdRadios key={el.prop || index} change={this._change} item={el} />
-
-        } else if (el.type.indexOf('radio') === 0) {
-
-            tag = <Elements.FdRadio key={el.prop || index} change={this._change} item={el} /> 
-
-        } else if (el.type.indexOf('switch') === 0) {
-
-            tag = <Elements.FdSwitch key={el.prop || index} change={this._change} item={el} />
-
-        } else if (el.type.indexOf('button') === 0) {
-
-            tag =  <Elements.FdButton key={el.prop || index} event={this._event} item={el} />
-
-        } else if (el.type.indexOf('progress') === 0) {
-
-            tag =  <Elements.FdProgress key={el.prop || index} item={el} />
-
-        } else if (el.type.indexOf('breadcrumb') === 0) {
-
-            tag = <Elements.FdBreadcrumb key={el.prop || index} event={this._event} item ={el} />
-
-        } else if (el.type.indexOf('pick') === 0) {
-
-            tag = <Elements.FdPickDate key={el.prop || index} change={this._change} item ={el} />
-
+        if (_index !== -1) {
+            type = el.type.substring(0, _index)
         } else {
+            type = el.type
+        } 
 
-            tag = <View style={el.style} key={el.prop || index}></View>
+        let Jsx = multi.get(type)
+        if (Jsx) {
+            return <Jsx 
+                key={el.prop || index}
+                others={el.others}
+                event={params => {this._tagHasColumnsEvent(params, el)}}
+                style={el.style} 
+                columns={el.columns} 
+                data={el.value} 
+                type={el.type}
+            />
         }
 
-        if (!util.startWith(el.type, ...noWrapper))
-            tag = <Containers.FdView item={el} key={el.prop || index}>
-                { tag }
-            </Containers.FdView>
-               
+        Jsx =  elements.get(type) 
 
-        return tag
+        if (!Jsx) {
+            return <View {...el} />
+        }
+
+        if (type == 'input') {
+            this.inputs.push(el.prop)
+        }
+        Jsx = <Jsx 
+            event={this._event} 
+            ref={el.prop}
+            key={el.prop || index} 
+            change={this._change}
+            item={el}
+        />
+
+        if (!noWrapper.includes(type))
+            Jsx = <Containers.FdView item={el} key={el.prop || index}>
+                { Jsx }
+            </Containers.FdView>
+
+        return Jsx
     }
 
     _change = (param) => {  
@@ -309,7 +239,6 @@ class Region extends Component {
     }
 
     _dueBack(newData) {
-        console.log(newData)
         if (newData instanceof Promise) {
             newData.then(nData => {
                 this._fresh(this, nData) 
@@ -320,7 +249,6 @@ class Region extends Component {
             if (nData)
                 this._dueBack(nData)
         } else  {
-
             this._fresh(this, newData) 
         }
     }
@@ -406,7 +334,6 @@ class Region extends Component {
     
     render() {   
         this.fnKey = 0
-        console.log('rend')
         return (
             <View style={[this.state.style]}>
                 {

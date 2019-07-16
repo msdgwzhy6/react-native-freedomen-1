@@ -18,9 +18,9 @@ export default class extends Base {
         let item = props.item || {}
 
         const types = {
-            'pickdate': 'date', 
-            'pickdatetime': 'datetime',
-            'picktime':  'time'
+            'pick-date': 'date', 
+            'pick-datetime': 'datetime',
+            'pick-time':  'time'
         }
         this.mode = types[item.type]
 

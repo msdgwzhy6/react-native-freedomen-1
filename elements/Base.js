@@ -40,7 +40,7 @@ export default class Base extends React.Component {
         //disabled是否有变化
         if (nextProps.item.disabled) {
 
-            this.nextDisabled = this._disabled(nextProps.item.disabled, nextProps.item.value, nextProps.item.data)
+            this.nextDisabled = this._disabled(nextProps.item.disabled, nextProps.item.value, nextProps.item.$data)
 
             if (this.nextDisabled !== this.disabled) { //need compare 
                 this.disabled = this.nextDisabled  

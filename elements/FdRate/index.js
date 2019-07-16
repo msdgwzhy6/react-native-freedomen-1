@@ -31,11 +31,15 @@ export default class extends Base {
         })
 
         this.style = this._style(item.style, this.state.value, this.state.data)
+        this.disabled = this._disabled(item.disabled, this.state.value, this.state.data)
         // this.filter = this._filter(item.filter, this.state.value, this.state.data) ??
         
     } 
 
     _click (value) {
+        if (this.disabled) 
+            return
+            
         this._change(value)
         this._startAnimation()
     }

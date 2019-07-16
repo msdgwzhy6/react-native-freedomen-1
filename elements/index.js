@@ -24,23 +24,45 @@ import FdBreadcrumb from './FdBreadcrumb';
 import FdPickDate from './FdPickDate/index'
  
 
-export default {
-    FdImage,
-    FdText,
-    FdButton,
-    FdInput,
-    FdCounter,
-    FdImages,
-    FdTags,
-    FdCheckBox,
-    FdCheckBoxs,
-    FdSelect,
-    FdSlider,
-    FdBreadcrumb,
-    FdRadio,
-    FdRadios,
-    FdPickDate,
-    FdRate, 
-    FdSwitch, 
-    FdProgress, 
-}
+// export default {
+//     FdImage,
+//     FdText,
+//     FdButton,
+//     FdInput,
+//     FdCounter,
+//     FdImages,
+//     FdTags,
+//     FdCheckBox,
+//     FdCheckBoxs,
+//     FdSelect,
+//     FdSlider,
+//     FdBreadcrumb,
+//     FdRadio,
+//     FdRadios,
+//     FdPickDate,
+//     FdRate, 
+//     FdSwitch, 
+//     FdProgress, 
+// }
+
+const map = new Map()
+map.set('text', FdText)
+map.set('image', FdImage)
+map.set('button', FdButton)
+map.set('input', FdInput)
+map.set('counter', FdCounter)
+map.set('images', FdImages)
+map.set('tags', FdTags)
+map.set('checkbox', FdCheckBox)
+map.set('checkboxs', FdCheckBoxs)
+map.set('select', FdSelect)
+map.set('slider', FdSlider)
+map.set('breadcrumb', FdBreadcrumb)
+map.set('radio', FdRadio)
+map.set('radios', FdRadios)
+map.set('pick', FdPickDate)
+map.set('rate', FdRate)
+map.set('switch', FdSwitch)
+map.set('progress', FdProgress)
+
+export default map

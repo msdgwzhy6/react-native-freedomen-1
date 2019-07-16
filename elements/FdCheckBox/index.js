@@ -1,5 +1,5 @@
 import React from 'react'
-import {Animated, Text, TouchableHighlight, TouchableOpacity} from 'react-native'
+import {Animated, Text, Image, TouchableOpacity} from 'react-native'
 import util from '../../utils/util' 
 import theme from '../../config/theme';
 var checkedImage = require('../icon/checked.png');
@@ -22,7 +22,7 @@ export default class extends Base {
         this.state = {
             type: item.type,
             prop: item.prop,
-            value: item.value, 
+            value: !!item.value, 
             data: item.$data
         }   
 
@@ -91,17 +91,16 @@ export default class extends Base {
                             borderRadius: 5,
                             alignItems: 'center', 
                             justifyContent: 'center',
-                            backgroundColor: this.state.value ? theme.color.primaryColor : 'white'
+                            backgroundColor: this.state.value ? theme.color.primaryColor : null
                         },
                         theme.external[this.props.item.type], 
                         util.makeStyle(this.style, ...styleItems), 
                         {transform: [{scale: this.scale}]}
                     ]}> 
                         {
-                            this.state.value ? <Text style={[
-                                {fontSize: theme.size.smallHeight < 25 ? 16: 26, color: 'white', fontWeight : "bold"},
-                                util.makeStyle(this.style, 'fontSize', 'color', 'fontWeight')
-                            ]}> √ </Text> : null
+                            this.state.value ? 
+                            <Image source={require('../icon/dui.png')} style={{width: theme.size.smallHeight < 25 ? 16: 26, height: theme.size.smallHeight < 25 ? 16: 26}}/>
+                            : null
                         }
                     </Animated.View>
 

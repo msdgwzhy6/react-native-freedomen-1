@@ -191,6 +191,7 @@ function equals(obj1, obj2) {
         return  obj1 == obj2
     }
     if (typeof obj1 == 'boolean') {
+        console.log(obj1, obj2)
         return obj1 == !!obj2
     }
     if (Array.isArray(obj1)) {

@@ -15,7 +15,7 @@ class Store {
     this.storage.save({
       key: key,
       data: data, 
-      expires: null
+      expires: 1000 * 3600 * 24,
     })
   }
   remove(key) {

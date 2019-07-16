@@ -28,5 +28,4 @@ export default class extends Base {
             {this.props.children}
         </View>
     }
-}
- 
+} 

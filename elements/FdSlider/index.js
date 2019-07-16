@@ -40,7 +40,7 @@ class FdSlider extends Base {
             <Slider 
                 minimumTrackTintColor={theme.color.primaryColor}
                 thumbTintColor={theme.color.primaryColor}
-                style={[theme.external[this.props.item.type], util.makeStyle(this.style, ...styleItems)]}
+                style={[util.makeStyle(theme.external[this.props.item.type], ...styleItems), util.makeStyle(this.style, ...styleItems)]}
                 value={this.state.value} 
                 onValueChange={this._change} />
         )

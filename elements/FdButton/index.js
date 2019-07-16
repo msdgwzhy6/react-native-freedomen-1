@@ -17,23 +17,21 @@ export default class extends Base {
             prop: item.prop,
             value: item.value,
             data: item.$data
-        } 
+        }  
         this.style = this._style(item.style, this.state.value, this.state.data)
         this.disabled = this._disabled(item.disabled, this.state.value, this.state.data)
     }
 
     _getXmlbyType = (item) => {
         let jsx = null   
-        let style = Object.assign(this.style , {})
-        this.disabled ? style.backgroundColor = theme.color.disableColor  :  ''
+       
         if (util.startWith(item.type, 'button-image')) {
-
             jsx = <FdImage item={item} />
-
         } else if (util.startWith(item.type, 'button')) {
-            
-            jsx = <FdText item={item} />
-
+            let _item = Object.assign({}, item)
+            _item.style = _item.style || {}
+            this.disabled ? _item.style.backgroundColor = theme.color.disableColor  :  _item.style.backgroundColor
+            jsx = <FdText item={_item} />
         }
         return jsx
     } 

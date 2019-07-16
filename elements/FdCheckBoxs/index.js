@@ -63,7 +63,7 @@ export default class extends Base {
     }
     render () {   
         return (
-            <View style={{flexDirection: 'row'}}>
+            <View style={[{flexDirection: 'row'}, util.makeStyle(this.style, 'flex')]}>
                 {
                     this.options.map((el, index) => {
                         return <View key={index} style={[
