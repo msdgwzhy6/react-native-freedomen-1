@@ -66,7 +66,7 @@ export default  class  extends React.Component {
                 {type: 'image', prop: 'image', style: {width: 120, height: 68}},
                 {type: 'br', style: {flexDirection: 'row'}}
               ],
-              {type: 'br-row'}
+              {type: 'br', style: {marginBottom: 1, padding: 15, backgroundColor: 'white'}}
             ]}
         />
     );
