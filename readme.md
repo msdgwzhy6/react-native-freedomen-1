@@ -1,3 +1,7 @@
+# 已有DEMO，见 example 文件夹， 完善中 ，敬请期待
+
+
+
 # 简介
 
  * react-native-freedomen 是能够大副度提升你的开发效率的框架
