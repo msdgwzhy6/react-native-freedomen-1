@@ -89,7 +89,11 @@ export default class extends Base {
         return arr
     }
     render() {
-        return  <View style={{flexDirection: 'row'}}>
+        return  <View style={[
+                {flexDirection: 'row'},
+                util.makeStyle(theme.external[this.props.item.type], ...theme.styleContain), 
+                util.makeStyle(this.style, ...theme.styleContain)
+            ]}>
             {
                 this._item()
             }

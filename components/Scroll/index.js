@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ScrollView } from 'react-native'
 import Region from '../Region/index' 
 import theme from '../../config/theme' 
+import util from '../../utils/util'
+
 class Scroll extends Component { 
 
     constructor (props) {
@@ -38,7 +40,7 @@ class Scroll extends Component {
         return (<ScrollView 
             showsVerticalScrollIndicator={false} 
             showsHorizontalScrollIndicator={false} 
-            style={[{flex: 1, backgroundColor: theme.color.backgroundColor}, this.props.style]} 
+            style={[{flex: 1, backgroundColor: theme.color.backgroundColor}, util.resetStyle(this.props.style)]} 
             horizontal={this.props.type == 'scroll-x'}
             {...this.props.others}>
                 { jsx }

@@ -30,7 +30,7 @@ class FdCounter extends Base {
         }   
         
         this.style = this._style(item.style, this.state.value, this.state.data)   
-           
+        this.disabled = this._disabled(item.disabled, this.state.value, this.state.data)     
     }
 
     componentWillReceiveProps(nextProps) { 
@@ -41,6 +41,8 @@ class FdCounter extends Base {
     } 
 
     _submit = (cm) => {
+        if (this.disabled)
+            return
         if (cm == 'sub') {
             let value = this.state.value
             value = value - this.state.step < this.state.min ? this.state.min : value - this.state.step
@@ -55,72 +57,80 @@ class FdCounter extends Base {
     render () { 
         return (
             <View style={[
-                {
-                    height: theme.size.normalHeight, 
-                    width: 115, 
-                    borderColor: theme.color.primaryColor, 
-                    borderWidth: .5, 
-                    borderRadius: 3, 
-                    flexDirection: 'row'
-                }, 
-                theme.external[this.props.item.type], 
-                util.makeStyle(this.style, ...styleItems)
+                util.makeStyle(theme.external[this.props.item.type], ...theme.styleContain), 
+                util.makeStyle(this.style, ...theme.styleContain)
             ]}>
-                <TouchableOpacity style={{
-                        width: theme.size.normalHeight, 
-                        alignItems: 'center', 
-                        justifyContent: 'center', 
-                        borderRightColor: theme.color.primaryColor, 
-                        backgroundColor: theme.color.primaryColor, 
-                        borderRightWidth: 1
-                    }} 
-                    onPress={() => {this._submit('sub')}}
-                >
-                    <Text style={{
-                            color: 'white', 
-                            fontSize: theme.size.primarySize,
-                            flex: 1, 
-                            textAlign: 'center',
-                            textAlignVertical: 'center'
-                        }}> 
-                        - 
-                    </Text> 
-                </TouchableOpacity> 
-
-                <TextInput 
-                    value={String(this.state.value)} 
-                    onChangeText={value => {
-                        let tempValue = value 
-                        if (tempValue > this.state.max)
-                            tempValue = this.state.max
-                        else if (tempValue < this.state.min)
-                            tempValue = this.state.min  
-
-                        this._change(parseInt(tempValue) || this.state.min)
-                    }}  
-                    style={{flex: 1, padding: 0, textAlign: 'center'}}
-                    keyboardType={'number-pad'}
-                />
-                
-                <TouchableOpacity 
-                    style={{
+                <View style={[
+                    {
+                        height: theme.size.normalHeight, 
+                        width: 115, 
+                        borderColor: theme.color.primaryColor, 
+                        borderWidth: .5, 
+                        borderRadius: 3, 
+                        flexDirection: 'row'
+                    }, 
+                    theme.external[this.props.item.type], 
+                    util.makeStyle(this.style, ...styleItems)
+                ]}>
+                    <TouchableOpacity 
+                        style={{
                             width: theme.size.normalHeight, 
                             alignItems: 'center', 
-                            justifyContent: 'center',
+                            justifyContent: 'center', 
+                            borderRightColor: theme.color.primaryColor, 
                             backgroundColor: theme.color.primaryColor, 
+                            borderRightWidth: 1
                         }} 
-                        onPress={() => {this._submit('add')}}
+                        onPress={() => {this._submit('sub')}}
                     >
-                    <Text style={{
-                            color: 'white', 
-                            fontSize: theme.size.primarySize,
-                            flex: 1, 
-                            textAlign: 'center',
-                            textAlignVertical: 'center'
-                        }}> 
-                        + 
-                    </Text> 
-                </TouchableOpacity>
+                        <Text style={{
+                                color: 'white', 
+                                fontSize: theme.size.primarySize,
+                                flex: 1, 
+                                textAlign: 'center',
+                                textAlignVertical: 'center'
+                            }}> 
+                            - 
+                        </Text> 
+                    </TouchableOpacity> 
+
+                    <TextInput 
+                        value={String(this.state.value)} 
+                        onChangeText={value => {
+                            if (this.disabled)
+                                return
+                            let tempValue = value 
+                            if (tempValue > this.state.max)
+                                tempValue = this.state.max
+                            else if (tempValue < this.state.min)
+                                tempValue = this.state.min  
+
+                            this._change(parseInt(tempValue) || this.state.min)
+                        }}  
+                        style={{flex: 1, padding: 0, textAlign: 'center'}}
+                        keyboardType={'number-pad'}
+                    />
+                    
+                    <TouchableOpacity 
+                        style={{
+                                width: theme.size.normalHeight, 
+                                alignItems: 'center', 
+                                justifyContent: 'center',
+                                backgroundColor: theme.color.primaryColor, 
+                            }} 
+                            onPress={() => {this._submit('add')}}
+                        >
+                        <Text style={{
+                                color: 'white', 
+                                fontSize: theme.size.primarySize,
+                                flex: 1, 
+                                textAlign: 'center',
+                                textAlignVertical: 'center'
+                            }}> 
+                            + 
+                        </Text> 
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }

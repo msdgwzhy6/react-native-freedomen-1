@@ -29,15 +29,14 @@ export default class extends Base {
         checkedImage = item.checked || checkedImage
         unCheckImage = item.unCheck || unCheckImage
 
-        this.scaleValue = new Animated.Value(0)
-
+        this.scaleValue = new Animated.Value(0) 
         this.scale = this.scaleValue.interpolate({
             inputRange: [0, 0.5, 1],
             outputRange: [1, 1.2, 1]
         })
 
         this.style = this._style(item.style, this.state.value, this.state.data)   
-           
+        this.disabled = this._disabled(item.disabled, this.state.value, this.state.data)   
     }
     
     _startAnimation() {
@@ -62,13 +61,20 @@ export default class extends Base {
     } 
   
     _click = () => {
+        if (this.disabled) 
+            return
         this._change(!this.state.value)
         this._startAnimation()
     }
 
     render () { 
         return (
-            <TouchableOpacity onPress={this._click} >
+            <TouchableOpacity 
+                onPress={this._click} 
+                style={[
+                    util.makeStyle(theme.external[this.props.item.type], ...theme.styleContain), 
+                    util.makeStyle(this.style, ...theme.styleContain)
+                ]}>
             {
                 this.props.item.checked && this.props.item.unCheck 
                 ?
@@ -99,11 +105,10 @@ export default class extends Base {
                     ]}> 
                         {
                             this.state.value ? 
-                            <Image source={require('../icon/dui.png')} style={{width: theme.size.smallHeight < 25 ? 16: 26, height: theme.size.smallHeight < 25 ? 16: 26}}/>
+                            <Image source={require('../icon/dui.png')} style={{width: theme.size.smallHeight * .8, height: theme.size.smallHeight * .8}}/>
                             : null
                         }
                     </Animated.View>
-
             }
             </TouchableOpacity>
         )

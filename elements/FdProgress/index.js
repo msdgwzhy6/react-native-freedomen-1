@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import * as Progress from 'react-native-progress'
-import { 
-	Dimensions, 
-} from 'react-native';
+import { View } from 'react-native';
 import theme from '../../config/theme'
 import util from '../../utils/util'
-import Base from '../Base'
-const width =  Dimensions.get('window').width
+import Base from '../Base' 
 
 export default class extends Base {
 
@@ -32,16 +29,16 @@ export default class extends Base {
 	render() {
         let tag, {value} = this.state
 
-        switch ((this.props.item || {}).type) { 
-
-			case 'progress-circle':
-				tag = <Progress.Circle progress={value} color={theme.color.primaryColor} formatText={() => {return this.state.value * 100 + '%'}} showsText={true} width={this.style.width || 60} />
-				break
-            default: 
-                tag = <Progress.Bar progress={value} width={this.style.width || 60} color={theme.color.primaryColor}/>
-                break
-        }  
+		if (util.startWith(this.props.item.type, 'progress-circle')) {
+			tag = <Progress.Circle progress={value} color={theme.color.primaryColor} formatText={() => {return this.state.value * 100 + '%'}} showsText={true} width={this.style.width || 60} />
+		} else {
+			tag = <Progress.Bar progress={value} width={this.style.width || 60} color={theme.color.primaryColor}/>
+		}
         
-		return tag
+		return <View style={[theme.external[this.props.item.type], this.style]}>
+			{
+				tag
+			}
+		 </View>
 	}
 }

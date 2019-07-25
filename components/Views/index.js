@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { ScrollView, View } from 'react-native'
+import { View } from 'react-native'
 import Region from '../Region/index' 
+import util from '../../utils/util'
+
 export default class extends Component { 
 
     constructor (props) {
@@ -39,7 +41,7 @@ export default class extends Component {
             return <Region  columns={columns} data={d} key={index} event={(params) => {this._event(params, index)}} /> 
         }) 
 
-        return <View style={[{flexDirection: this.props.type == 'view-x' ? 'row': 'column'}, this.props.style]} {...this.props.others}>
+        return <View style={[{flexDirection: this.props.type == 'view-x' ? 'row': 'column'}, util.resetStyle(this.props.style)]} {...this.props.others}>
             {
                 jsx
             }

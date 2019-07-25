@@ -1,31 +1,48 @@
 import React from 'react'
 import {View} from 'react-native'
- 
-import util from '../../utils/util'
+import util from '../../utils/util'  
 import theme from '../../config/theme'
-import Base from '../../elements/Base'
+import SwipeOut from 'react-native-swipeout'
+export default class extends React.Component {
 
-export default class extends Base {
-    //load
     constructor (props) { 
         super (props)
-        let item = props.item || {}
-        this.state = { 
-            prop: item.prop,
-            value: item.value,
-            data: item.$data
-        } 
-        
+    }
+    
+    _buttons = (options) => {
+        if (!options) {
+            return [{
+                text: '删除',
+                backgroundColor: 'red',
+                onPress: () => {
+                   this.props.event && this.props.event({
+                        prop: '$delete', 
+                        type: 'press'
+                   })
+                },
+            }]
+        } else {
+            return options.map(option => {
+                return {
+                    text: option.value,
+                    backgroundColor: option.backgroundColor || 'red',
+                    onPress: () => {
+                        this.props.event && this.props.event({
+                            prop:  option.prop, 
+                            type: 'press'
+                        })
+                    },
+                }
+            })
+        }
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({value: nextProps.item.value})
+    render () {  
+        return  <SwipeOut right={this._buttons(this.props.item.options)}> 
+                <View style={[theme.external[this.props.item.type],  util.resetStyle(this.props.item.style)]} >
+                    {this.props.children}
+                </View>
+            </SwipeOut> 
     }
-
-    render () { 
-        this.style = this._style(this.props.item.style, this.state.value, this.state.data)
-        return <View style={[theme.external[this.props.item.type], this.style]}>
-            {this.props.children}
-        </View>
-    }
-} 
+}
+ 

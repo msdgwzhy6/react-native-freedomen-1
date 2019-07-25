@@ -1,21 +1,22 @@
 import React from 'react'
-import { Switch } from 'react-native' 
+import { Switch, View } from 'react-native' 
 import theme from '../../config/theme'
 import Base from '../Base'
 
 class FdSwitch extends Base {
     constructor (props) {
         super (props)
-        let item = props.item || {}
-        //{item => Object: [type, value, options, label, event...]}
-        //type: button-text, button-image, button-view
+        let item = props.item || {} 
         this.state = {
             value: !!item.value, 
             prop: item.prop, 
             data: item.$data
         }
+
+        this.style = this._style(item.style, this.state.value, this.state.data) 
           
     } 
+
     componentWillReceiveProps(nextProps) {
         this.setState({
             value: nextProps.item.value
@@ -24,7 +25,16 @@ class FdSwitch extends Base {
     
     render () {
         return (
-            <Switch thumbColor={theme.color.primaryColor} trackColor={{false: '#ccc', true: theme.color.primaryColor}} value={this.state.value} onValueChange={this._change}/>
+            <View style={[
+                theme.external[this.props.item.type],
+                this.style
+            ]}>
+                <Switch thumbColor={theme.color.primaryColor} 
+                    trackColor={{false: theme.color.placeholder, true: theme.color.primaryColor}} 
+                    value={this.state.value} 
+                    onValueChange={this._change}
+                />
+            </View>
         )
     }
 }

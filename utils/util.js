@@ -74,7 +74,7 @@ function correctOption(options) {
     })
 }
 
-const resetStyle = (style) => {
+const resetStyle = (style = {}) => {
     let newStyle = {}
     for (let i in style) { 
         if (percentNum.includes(i)) { 
@@ -177,7 +177,18 @@ function startWith(value = "", ...options) {
     }
     return false
 }
-
+function eqArray(arr1, arr2) {
+    if (arr1.length !== arr1.length) {
+        return false
+    } else { 
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false
+            }
+        }
+        return true;
+    }
+}
 function equals(obj1, obj2) { 
 
     if (obj1 === obj2) {
@@ -191,12 +202,11 @@ function equals(obj1, obj2) {
         return  obj1 == obj2
     }
     if (typeof obj1 == 'boolean') {
-        console.log(obj1, obj2)
         return obj1 == !!obj2
     }
     if (Array.isArray(obj1)) {
         if (Array.isArray(obj2))
-            return obj1.toString() == obj2.toString()
+            return eqArray(obj1, obj2)
         else return false
     }
     

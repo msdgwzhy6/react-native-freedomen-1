@@ -6,6 +6,7 @@ import theme from '../config/theme'
 const redux = Region.redux
 import elements from '../elements'
 const global = {}
+ 
 export default {
     Region,
     redux,

@@ -1,7 +1,6 @@
 import React from 'react'
 import {View} from 'react-native'
- 
-import util from '../../utils/util'
+  
 import theme from '../../config/theme'
 import Base from '../../elements/Base'
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Slider from 'react-native-slider'
 import Base from '../Base'
 import { 
-	Dimensions, 
+	View, 
 } from 'react-native';
 
 import theme from '../../config/theme'
@@ -10,8 +10,7 @@ import util from '../../utils/util'
 const styleItems = [
     'height',  //
     'width' //
-]
-const width =  Dimensions.get('window').width
+] 
 
 class FdSlider extends Base {
 
@@ -27,6 +26,7 @@ class FdSlider extends Base {
         }
 
         this.style = this._style(item.style, this.state.value, this.state.data) 
+        this.disabled = this._disabled(item.disabled, this.state.value, this.state.data)
     }
  
 	componentWillReceiveProps(nextProps) {
@@ -37,12 +37,17 @@ class FdSlider extends Base {
  
 	render() {
         return (
-            <Slider 
-                minimumTrackTintColor={theme.color.primaryColor}
-                thumbTintColor={theme.color.primaryColor}
-                style={[util.makeStyle(theme.external[this.props.item.type], ...styleItems), util.makeStyle(this.style, ...styleItems)]}
-                value={this.state.value} 
-                onValueChange={this._change} />
+            <View style={[
+                util.makeStyle(theme.external[this.props.item.type], ...theme.styleContain, ...styleItems), 
+                util.makeStyle(this.style, ...theme.styleContain, ...styleItems)
+            ]}>
+                <Slider 
+                    disabled={this.disabled}
+                    minimumTrackTintColor={theme.color.primaryColor}
+                    thumbTintColor={theme.color.primaryColor}
+                    value={this.state.value} 
+                    onValueChange={this._change} />
+            </View>
         )
 	}
 }

@@ -14,9 +14,7 @@ export default class extends Base {
 	constructor(props) {
 
         super(props)
-        
         let item = props.item || {}
-
         const types = {
             'pick-date': 'date', 
             'pick-datetime': 'datetime',
@@ -32,6 +30,7 @@ export default class extends Base {
 
         this.style = this._style(item.style, this.state.value, this.state.data) 
         this.filter = this._filter(item.filter, this.state.value, this.state.data)
+        this.disabled = this._disabled(item.disabled, this.state.value, this.state.data)   
     }
     
 	componentWillReceiveProps(nextProps) {
@@ -45,7 +44,9 @@ export default class extends Base {
         return (
             <View style={[theme.external[this.props.item.type], this.style]}>
                 <TouchableOpacity 
-                    onPress={params => {
+                    onPress={() => {
+                        if (this.disabled)
+                            return
                         this.date.onPressDate()
                     }} >
                     <Text style={[

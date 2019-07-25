@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import {View, ImageBackground, TouchableOpacity } from 'react-native'
+import {View} from 'react-native'
+
 import elements from '../../elements' 
-import Containers from '../../containers'
-import Swipeout from 'react-native-swipeout'
-import Scroll from '../Scroll/index' 
-import Views from '../Views/index'
-import util from '../../utils/util'    
-import theme from '../../config/theme'
-const funMap = {}
-const noWrapper = ['button', 'text', 'checkbox', 'checkboxs', 'radio', 'radios', 'input', 'pick', 'view', 'scroll', 'tags', 'select', 'image']
-const multi = new Map()
-multi.set('view', Views)
-multi.set('scroll', Scroll)
+import containers from '../../containers'
+import multi from './multi'  
+
+import util from '../../utils/util'   
+const funMap = {} 
 
 class Region extends Component {
     //全局状态管理
@@ -19,7 +14,7 @@ class Region extends Component {
         Object.keys(obj).forEach((key) => {
             if (Region.reduxMap[key] !== void 0) { 
                 let newData = {}
-                if (typeof obj[key] == 'function') {
+                if (typeof obj[key] === 'function') {
                     newData = obj[key](Region.reduxMap[key].data) 
                 } else {
                     newData = obj[key] 
@@ -83,7 +78,6 @@ class Region extends Component {
         } 
        
         this.state.columns = nextProps.columns 
-
         this._fresh(this, data) 
     } 
 
@@ -108,7 +102,6 @@ class Region extends Component {
 
     _resetColumns = (columns = [], data = {}) => {
         for (let i = 0; i < columns.length; i ++) { 
-
             if (Array.isArray(columns[i])) {
                 this._resetColumns(columns[i], data)
             } else if (typeof columns[i] === 'function') { 
@@ -121,37 +114,8 @@ class Region extends Component {
                 this._setColumn(columns[i], data) 
             } 
         } 
-
         return columns
     } 
-
-    _buttons = (options) => {
-        if (!options) {
-            return [{
-                text: '删除',
-                backgroundColor: 'red',
-                onPress: () => {
-                    this._event({
-                        prop: '$delete', 
-                        type: 'press'
-                    })
-                },
-            }]
-        } else {
-            return options.map(option => {
-                return {
-                    text: option.value,
-                    backgroundColor: option.backgroundColor || 'red',
-                    onPress: () => {
-                        this._event({
-                            prop:  option.prop, 
-                            type: 'press'
-                        })
-                    },
-                }
-            })
-        }
-    }
 
     _tagHasColumnsEvent = (params, el) => {
         let newData = this.props.event && this.props.event(params) 
@@ -173,16 +137,21 @@ class Region extends Component {
         }
     }
 
-    _tag = (el, index) => {
-        let type, _index = el.type.indexOf('-')
-
+    _getType(el) {
+        let type, _index = (el.type || '').indexOf('-')
+        
         if (_index !== -1) {
             type = el.type.substring(0, _index)
         } else {
             type = el.type
         } 
 
+        return type
+    }
+    _tag = (el, index) => {
+        let type = this._getType(el)
         let Jsx = multi.get(type)
+
         if (Jsx) {
             return <Jsx 
                 key={el.prop || index}
@@ -205,23 +174,16 @@ class Region extends Component {
             this.inputs.push(el.prop)
         }
         Jsx = <Jsx 
+            key={el.prop || index} 
             event={this._event} 
             ref={el.prop}
-            key={el.prop || index} 
             change={this._change}
             item={el}
-        />
-
-        if (!noWrapper.includes(type))
-            Jsx = <Containers.FdView item={el} key={el.prop || index}>
-                { Jsx }
-            </Containers.FdView>
-
+        /> 
         return Jsx
     }
 
     _change = (param) => {  
-        
         let { data } = this.state
         data[param.prop] = param.value 
 
@@ -253,8 +215,7 @@ class Region extends Component {
         }
     }
 
-    _event = (params) => {   
-
+    _event = (params) => {    
         params.row = this.state.data 
         let newData = this.props.event && this.props.event(params)
 
@@ -262,10 +223,21 @@ class Region extends Component {
             this._dueBack(newData)
 
     }
-    
+
+    _getContainer(el, children, index) {
+        let type = this._getType(el)
+        let Jsx = containers.get(type)
+        Jsx = <Jsx 
+            key={index}
+            event={this._event} 
+            item={el}
+            children={children}
+        /> 
+        return Jsx
+    }
+
     _makeJsx = (columns) => {
-        let view = []
-        let sub = [] 
+        let view = [], sub = [] 
         for (let i = 0; i < columns.length; i ++) {  
 
             if (typeof columns[i] === 'function') {
@@ -273,9 +245,8 @@ class Region extends Component {
                 sub.push(Array.isArray(column) ? this._makeJsx(column) : this._tag(column, i)) 
                 continue
             }
-
-            if (util.startWith(columns[columns.length - 1].type, ...['br', 'click', 'backimage', 'swipeout']) && typeof columns[columns.length - 1].load === 'function') {
-
+            
+            if (util.startWith(columns[columns.length - 1].type, ...containers.keys()) && typeof columns[columns.length - 1].load === 'function') {
                 if (!columns[columns.length - 1].load(columns[columns.length - 1].value, this.state.data))
                     continue
             }
@@ -284,58 +255,28 @@ class Region extends Component {
                 if (!columns[i].load(columns[i].value, this.state.data))
                     continue
             }
-            
-            //br: view, click:可以点击， backimage: 背景图片， swipeout 侧滑,必要options [{prop: ,text, backgroundColor},{text}]
-            if (i === columns.length - 1 && util.startWith(columns[i].type, ...['br', 'click', 'backimage', 'swipeout'])) {
-                if (util.startWith(columns[i].type, 'br')) {
-                    view.push( 
-                        <View key={i} style={[theme.external[columns[i].type], util.resetStyle(columns[i].style)]}>{ sub }</View>
-                    )  
-                } else if (util.startWith(columns[i].type, 'backimage')) {
-                    this.state.data[columns[i].prop] ? 
-                        view.push(
-                            <ImageBackground key={i} source={{uri: this.state.data[columns[i].prop]}} style={[theme.external[columns[i].type], util.resetStyle(columns[i].style)]}>
-                                { sub } 
-                            </ImageBackground>
-                        )  :
-                        view.push(
-                            <ImageBackground key={i} source={columns[i].value} style={[theme.external[columns[i].type], util.resetStyle(columns[i].style)]}>
-                                { sub } 
-                            </ImageBackground>
-                        )  
-                } else if (util.startWith(columns[i].type, 'click')) {
-                    view.push( 
-                        <TouchableOpacity 
-                            key={i} 
-                            style={[theme.external[columns[i].type], util.resetStyle(columns[i].style)]} 
-                            onPress={() => {this._event({ type: 'click', prop: columns[i].prop })}}>
-                            { sub } 
-                        </TouchableOpacity> 
-                    ) 
-                } else if (util.startWith(columns[i].type, 'swipeout')) {
-                    view.push(
-                        <Swipeout key={i} right={this._buttons(columns[i].options)}>
-                            <View style={[theme.external[columns[i].type], util.resetStyle(columns[i].style)]}>
-                                {sub}
-                            </View>
-                        </Swipeout>
-                    )
-                }
+            //容器类别
+            if (i === columns.length - 1 && util.startWith(columns[i].type, ...containers.keys())) {
+                view.push(this._getContainer(columns[i], sub, i))
                 sub = [] 
-            } else if (Array.isArray(columns[i]))
+            //数组，递归
+            } else if (Array.isArray(columns[i])) {
                 sub.push(this._makeJsx(columns[i]))
-            else
+            } else {
                 sub.push(this._tag(columns[i], i))
+            }
         }  
-        if (!util.startWith(columns[columns.length - 1].type, ...['br', 'click', 'backimage', 'swipeout']))  
-            view.push(<View key={'_10000'} style={[this.state.style]}>{ sub }</View>) 
+        
+        if (!util.startWith(columns[columns.length - 1].type, ...containers.keys()))  
+            view.push(<View key={'_10000'} style={util.resetStyle(this.state.style)}>{ sub }</View>) 
+
         return view
     }
     
     render() {   
         this.fnKey = 0
         return (
-            <View style={[this.state.style]}>
+            <View style={util.resetStyle(this.state.style)}>
                 {
                     this._makeJsx(this.state.columns)
                 }

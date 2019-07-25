@@ -25,7 +25,7 @@ export default class FdInput extends Base {
             placeholder: item.placeholder
         }  
         this.style = this._style(item.style, this.state.value, this.state.data) 
-
+        this.disabled = this._disabled(item.disabled, this.state.value, this.state.data)  
     }
 
     _fresh = (data) => {
@@ -38,7 +38,7 @@ export default class FdInput extends Base {
         return (  
             util.startWith('input-area', this.props.item.type)
             ? 
-            <View style={[theme.external[this.props.item.type], this.style]}>
+            <View style={[theme.external[this.props.item.type] ,this.style]}>
                 <TextInput  
                     underlineColorAndroid="transparent"  
                     placeholder={this.state.placeholder} 
@@ -46,6 +46,7 @@ export default class FdInput extends Base {
                     autoFocus={this.props.item.focus}
                     autoCorrect={false}  
                     multiline = {true}
+                    editable={!this.disabled}
                     maxLength={this.props.item.maxLength}
                     numberOfLines = {3 || this.props.item.row || this.props.item.numberOfLines}
                     underlineColorAndroid={'transparent'}
@@ -59,7 +60,10 @@ export default class FdInput extends Base {
                     onChangeText={this._change}/>
                     {
                         this.props.item.maxLength ? 
-                        <Text style={[{textAlign: 'right', color: theme.color.placeholder}, util.makeStyle(this.style, 'color', 'fontSize')]}>
+                        <Text style={[
+                            {textAlign: 'right', color: theme.color.placeholder}, 
+                            util.makeStyle(this.style, 'color', 'fontSize')
+                        ]}>
                             {(this.state.value || '').length + ' / ' + this.props.item.maxLength}
                         </Text> : null
                     }
@@ -74,11 +78,16 @@ export default class FdInput extends Base {
                     autoFocus={this.props.item.focus}
                     autoCorrect={false} 
                     autoCapitalize={'none'}  
+                    editable={!this.disabled}
                     {...this.props.item.others}
                     maxLength={this.props.item.maxLength}
                     secureTextEntry={this.props.item.type === 'input-password'}
                     clearButtonMode={'while-editing'} 
-                    style={[{padding: 0}, util.makeStyle(theme.external[this.props.item.type], ...styleItems),  util.makeStyle(this.style, ...styleItems)]} 
+                    style={[
+                        {padding: 0}, 
+                        util.makeStyle(theme.external[this.props.item.type], ...styleItems),  
+                        util.makeStyle(this.style, ...styleItems)
+                    ]} 
                     value={this.state.value}  
                     onChangeText={this._change}/>
             </View>

@@ -23,28 +23,6 @@ import FdSwitch from './FdSwitch/index'
 import FdBreadcrumb from './FdBreadcrumb'; 
 import FdPickDate from './FdPickDate/index'
  
-
-// export default {
-//     FdImage,
-//     FdText,
-//     FdButton,
-//     FdInput,
-//     FdCounter,
-//     FdImages,
-//     FdTags,
-//     FdCheckBox,
-//     FdCheckBoxs,
-//     FdSelect,
-//     FdSlider,
-//     FdBreadcrumb,
-//     FdRadio,
-//     FdRadios,
-//     FdPickDate,
-//     FdRate, 
-//     FdSwitch, 
-//     FdProgress, 
-// }
-
 const map = new Map()
 map.set('text', FdText)
 map.set('image', FdImage)

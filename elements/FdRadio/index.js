@@ -10,7 +10,7 @@ const styleItems = [
     'borderRadius',
     'borderWidth', 
     'borderColor'
-]
+] 
 
 export default class extends Base { 
     constructor (props) {
@@ -25,7 +25,7 @@ export default class extends Base {
         }   
 
         this.style = this._style(item.style, this.state.value, this.state.data)   
-
+        this.disabled = this._disabled(item.disabled, this.state.value, this.state.data)   
         this.scaleValue = new Animated.Value(0)
         this.scale = this.scaleValue.interpolate({
             inputRange: [0, 0.5, 1],
@@ -56,31 +56,48 @@ export default class extends Base {
     }
   
     _click = () => {
+        if (this.disabled)
+            return
         this._change(!this.state.value)
         this._startAnimation()
     }
+    _getStyle = (style) => {
+        let _style = util.makeStyle(style, ...styleItems)
+        let newHeight = _style.width || _style.height || theme.size.smallHeight
 
+        _style.width = newHeight
+        _style.height = newHeight
+        _style.borderRadius = newHeight
+        _style.padding = parseInt(newHeight * 0.14) 
+        return _style
+    }
     render () { 
         return (
-            <TouchableOpacity underlayColor={'transparent'} onPress={this._click}>
+            <TouchableOpacity 
+                underlayColor={'transparent'} 
+                onPress={this._click} 
+                style={[
+                    util.makeStyle(theme.external[this.props.item.type], ...theme.styleContain), 
+                    util.makeStyle(this.style, ...theme.styleContain)
+                ]}>
                 <Animated.View style={[
                         {
                             borderWidth: 2, 
                             borderColor: theme.color.primaryColor,
-                            borderRadius: 25,
+                            borderRadius: theme.size.smallHeight,
                             height: theme.size.smallHeight, 
                             width: theme.size.smallHeight, 
-                            padding: theme.size.smallHeight < 26 ? 2 : 5
+                            padding: parseInt(theme.size.smallHeight * 0.14) 
                         }, 
                         theme.external[this.props.item.type], 
-                        util.makeStyle(this.style, ...styleItems),
+                        this._getStyle(this.style),
                         {transform: [{scale: this.scale}]}
                     ]}
                 >
                 {
                     this.state.value  ? 
                         <View style={[
-                                {backgroundColor: theme.color.primaryColor, borderRadius: 20, flex: 1}, 
+                                {backgroundColor: theme.color.primaryColor, borderRadius: theme.size.smallHeight, flex: 1}, 
                                 util.makeStyle(theme.external[this.props.item.type], 'borderRadius'),
                                 util.makeStyle(this.style, 'borderRadius'),
                             ]} 

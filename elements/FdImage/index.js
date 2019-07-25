@@ -14,23 +14,6 @@ const styleItems = [
     'width' //
 ]
 
-const styleContain = [
-    'padding',
-    'paddingLeft',
-    'paddingRight',
-    'paddingBottom',
-    'paddingTop',
-    'margin',
-    'marginLeft',
-    'marginRight',
-    'marginTop',
-    'marginBottom',
-    'flex',
-    'alignItems',
-    'justifyContent'
-
-]
-
 class FdImage extends Base {
     constructor (props) {
         super (props)
@@ -62,7 +45,7 @@ class FdImage extends Base {
             image = {uri: this.props.item.baseUrl !== void 0 ? this.props.item.baseUrl + value : value}
     
         return (
-            <View style={[util.makeStyle(theme.external[this.props.item.type], ...styleContain), util.makeStyle(this.style, ...styleContain)]}>
+            <View style={[util.makeStyle(theme.external[this.props.item.type], ...theme.styleContain), util.makeStyle(this.style, ...theme.styleContain)]}>
                 <Image source={image} style={[util.makeStyle(theme.external[this.props.item.type], ...styleItems), theme.external[this.props.item.type], util.makeStyle(this.style, ...styleItems)]}/> 
             </View>
         )

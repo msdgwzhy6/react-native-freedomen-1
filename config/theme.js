@@ -1,4 +1,4 @@
- 
+import styles from './styles' 
 
 const color = { 
     primaryColor: '#409EFF',  //主色 
@@ -8,72 +8,30 @@ const color = {
     placeholder: '#999'
 
 }
+
 const size = { 
     primarySize: 16,  
-    itemSpace: 15,
+    itemSpace: 8.8,
     largeHeight: 42, 
     normalHeight: 35,
     smallHeight: 30
 } 
+
 const external = {
-    'text': {
-        color: '#999',
-        fontSize: 14
-    },
-
-    'text-h1': {
-        color: 'black',
-        fontSize: 22
-    },
-    'text-h2': {
-        color: '#191919',
-        fontSize: 20
-    },
-    'text-h3': {
-        color: '#232323',
-        fontSize: 18
-    },
-    'text-h4': {
-        color: '#323232',
-        fontSize: 16
-    },
-    'text-h5': {
-        color: '#666',
-        fontSize: 14
-    },
-    'text-badge': {
-        color: 'white',
-        backgroundColor: 'red',  
-        minHeight: 10,
-        minWidth: 10,
-        paddingLeft: 7,
-        paddingRight: 7,
-        borderRadius: 16,
-        padding: 1, 
-        textAlign: 'center', 
-        borderColor: 'white',
-        borderWidth: .8,
-    },
-
-    
-    'image-icon': {
-        height: 22,
-        width: 22
-    },
+    ...styles
 }
 function custom(obj1 = {}, obj2 = {}, obj3 = {}) {
     //color
     for(let el in obj1) {
         color[el] = obj1[el]
     }
+
     //size
     for(let el in obj2) {
         size[el] = obj2[el]
     }
 
-
     //external
-
     external['button-primary'] = {
         padding: 12,
         textAlign: 'center',
@@ -118,6 +76,32 @@ function custom(obj1 = {}, obj2 = {}, obj3 = {}) {
     } 
     
 }
+
+const splitOuterStyle = [
+    'flex',
+    'height',
+    'width',
+]
+
+const styleContain = [
+    'flex',
+    'alignItems',
+    'justifyContent',
+    'padding',
+    'paddingLeft',
+    'paddingRight',
+    'paddingBottom',
+    'paddingTop',
+    'margin',
+    'marginLeft',
+    'marginRight',
+    'marginTop',
+    'marginBottom',
+    'flex',
+    'alignItems',
+    'justifyContent'
+]
+
 export default {
-    color, size , external, custom
+    color, size , external, custom, styleContain
 }

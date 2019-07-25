@@ -63,12 +63,15 @@ export default class extends Base {
     }
     render () {   
         return (
-            <View style={[{flexDirection: 'row'}, util.makeStyle(this.style, 'flex')]}>
+            <View style={[
+                {flexDirection: 'row'},
+                util.makeStyle(theme.external[this.props.item.type], ...theme.styleContain), 
+                util.makeStyle(this.style, ...theme.styleContain, 'flex')
+            ]}>
                 {
                     this.options.map((el, index) => {
                         return <View key={index} style={[
-                                {flexDirection: 'row', alignItems: 'center', marginLeft: index == 0 ? 0 : 6}, 
-                                util.makeStyle(this.style, ...styleItems)
+                                {flexDirection: 'row', alignItems: 'center'}
                             ]}>
                             <CheckBox 
                                 item={{
@@ -76,18 +79,19 @@ export default class extends Base {
                                     checked: this.props.item.checked, 
                                     unCheck: this.props.item.unCheck, 
                                     value: this.state.value.includes(el.value),
-                                    style: this.style
                                 }} 
                                 change={this._submit}
                             />
                             <Text style={[
                                 {
-                                    color: this.state.value.includes(el.value) ? theme.color.primaryColor : theme.color.optionColor, 
+                                    color: theme.color.optionColor,
                                     fontSize: theme.size.primarySize, 
                                     marginLeft: 5,
                                     marginRight: theme.size.itemSpace
                                 },
-                                util.makeStyle(this.style, 'fontSize', 'color')
+                                util.makeStyle(theme.external[this.props.item.type], 'fontSize', 'color'),
+                                util.makeStyle(this.style, 'fontSize', 'color'),
+                                this.state.value.includes(el.value) && {color: theme.color.primaryColor}
                             ]}>
                                 {el.label}
                             </Text>
