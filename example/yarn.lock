@@ -5018,10 +5018,10 @@ react-native-elements@^1.1.0:
     react-native-ratings "^6.3.0"
     react-native-status-bar-height "^2.2.0"
 
-react-native-freedomen@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.npmjs.org/react-native-freedomen/-/react-native-freedomen-0.2.6.tgz#a3b2efb00628142aff9d3a438d41625c0481ea84"
-  integrity sha512-2hF9qywW++wIrl29MDSCdM9KjIJm0GLMolD2nk+81urvZMCwfhq+7PIM3lYCE45wnMQtnBhML8UBRX97kABCwQ==
+react-native-freedomen@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.npmjs.org/react-native-freedomen/-/react-native-freedomen-0.2.8.tgz#7ddd05a609261287d550b6c0df536005b78b7f0d"
+  integrity sha512-n7B+eueHnn3rsKl7mGon8Q8AaGZImZIkDOr+2QRD62ltSaZoP4IfOHv+KKG9veuFKY38zX14UAToQ0iumtaN8A==
   dependencies:
     react-native-datepicker "^1.7.2"
     react-native-progress "^3.6.0"

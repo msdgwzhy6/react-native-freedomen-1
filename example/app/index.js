@@ -6,6 +6,22 @@ import Form from './page/Form'
 import Form2 from './page/Form2'
 import Form3 from './page/Form3'
 
+import Button from './elements/Button'
+import Input from './elements/Input'
+import CheckBox from './elements/CheckBox'
+import Select from './elements/Select'
+import Tags from './elements/Tags'
+import Text from './elements/Text'
+import CheckBoxs from './elements/CheckBoxs'
+import Radio from './elements/Radio'
+import Radios from './elements/Radios'
+import Counter from './elements/Counter'
+import Rate from './elements/Rate'
+import Slider from './elements/Slider'
+import _Date from './elements/Date'
+import Progress from './elements/Progress'
+import Image from './elements/Image'
+
 import BottomBar from './BottomBar'
 const App = createBottomTabNavigator({
     Home: Home,
@@ -21,12 +37,29 @@ const App = createBottomTabNavigator({
         }
     }
 });
+
 const AppNavigator = createStackNavigator({
     App: App,
     Form: Form,
     Form2:Form2,
-    Form3: Form3
+    Form3: Form3,
+    Button: Button,
+    Input: Input,
+    CheckBox: CheckBox,
+    Select: Select,
+    Tags: Tags,
+    Text: Text,
+    CheckBoxs: CheckBoxs,
+    Radio: Radio,
+    Radios: Radios,
+    Rate: Rate,
+    Counter: Counter,
+    Progress: Progress,
+    Date: _Date,
+    Slider: Slider,
+    Image: Image
 }, {
     initialRouteName: "App",
 })
+
 export default createAppContainer(AppNavigator);

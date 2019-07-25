@@ -1,14 +1,21 @@
 import React from 'react'
-import {Text,ScrollView,View } from "react-native";
+import { ScrollView,View, Animated ,Text as TX, findNodeHandle,
+    UIManager} from "react-native";
 import Freedomen from 'react-native-freedomen'    
+import {Text, Input, Rating,CheckBox,Tooltip,Slider, Button, Avatar, Badge, Icon, withBadge } from 'react-native-elements'
 
 export default class extends React.Component {
     static navigationOptions = {
-        title: '待续...'
+        title: 'elements Test'
     }
+
     constructor(props) {
         super(props)
         this.state = {
+            load: true,
+            value: 0.2,
+            fade1: new Animated.Value(1),
+            fade2: new Animated.Value(1),
             form: {
                 name: '测试姓名',
                 age: '1994-08-08',
@@ -17,55 +24,118 @@ export default class extends React.Component {
             data: {}
         }
     }
+
+    componentDidMount() {
+
+        // const handle = findNodeHandle(this.refs.nihao);
+        
+        // UIManager.measure(handle, (x, y, width, height, pageX, pageY) => {
+        //     console.log(x, y, width, height)
+        // });
+
+            // this.setState({
+            //     load: true
+            // },() => {
+            //     Animated.parallel([
+            //         Animated.timing( 
+            //             this.state.fade1, // 要变化的动画值
+            //             {
+            //                 toValue: 1, // 最终的动画值
+            //                 timing: 200
+            //             }
+            //         ).start(),
+            //         Animated.timing( 
+            //             this.state.fade2, // 要变化的动画值
+            //             {
+            //                 toValue: 1, // 最终的动画值
+            //                 timing: 200
+            //             }
+            //         ).start()
+            //     ]) // 开始执行动画
+            // })
+    }
+
     render() {  
         return ( 
             <ScrollView >  
-                <Freedomen.Region 
-                    style={{padding: 2, marginTop: 15}}
-                    event={params => { 
-                    }} 
-                    columns={[   
-                        [
-                            {type: 'text-h1', value: '表单DEMO 2'},
-                            {type: 'br-form-row'}
-                        ],
-                        [
-                            {type: 'text-form-label',  value: '姓名'},
-                            {type: 'input-text', prop: 'name', placeholder: '请输入姓名', style: {flex: 1}},
-                            {type: 'text-must', prop: 'vaild_name'},
-                            {type: 'br-form-row'}
-                        ], [
-                            {type: 'text-form-label', value: '姓别'},
-                            {type: 'radios', prop: 'sex', options: '男,女', style: {borderRadius: 45}, style: {flex: 1}},
-                            {type: 'text-must', prop: 'vaild_sex'},
-                            {type: 'br-form-row'}
-                        ], [
-                            {type: 'text-form-label', value: '年龄'},
-                            {type: 'pick-date', prop: 'age', placeholder: '请选择出生日期', style: {flex: 1}},
-                            {type: 'text-must', prop: 'vaild_age'},
-                            {type: 'br-form-row'}
-                        ], [
-                            {type: 'text-form-label', value: '完成 '},
-                            {type: 'slider', prop: 'complete', style: {flex: 1, paddingRight: 10}},
-                            {type: 'text', filter: (value, data) => parseInt(data.complete * 100) + '%'},
-                            {type: 'br-form-row'}
-                        ], [
-                            {type: 'text-form-label', value: '爱好'},
-                            {type: 'checkboxs', prop: 'hobby', options: '钓鱼,书法,唱歌', style: {flex: 1}},
-                            {type: 'text-must', prop: 'vaild_hobby'},
-                            {type: 'br-form-row'}
-                        ], [  
-                            {type: 'text-form-label', value: '简介'},
-                            {type: 'input-area', prop: 'intro', maxLength: 200, placeholder: '请简要介绍自己', style: {paddingTB: 5}},
-                            {type: 'br-form-col'}
-                        ], [  
-                            {type: 'text-form-label', value: '评价'},
-                            {type: 'rate', prop: 'star', style: {paddingRight: 10}},
-                            {type: 'br-form-row', style: {marginBottom: 5}}
-                        ],
-                        {type: 'button-primary', value: '提交', prop: 'submit', disabled: (value, data) => !data.name}
-                    ]}
-                />
+                <Animated.View style={{flexDirection: 'row', opacity:  this.state.fade1 }}>
+                    <Text ref="nihao"  h2>Heading ---</Text>
+                </Animated.View>
+                {
+                    this.state.load ?  <Animated.View style={{flexDirection: 'row', opacity:  this.state.fade }}>
+                    <Text  h4>量子</Text>
+                        <Input  placeholder='BASIC INPUT' />
+                    </Animated.View> : null
+                }  
+                <Animated.View style={{flexDirection: 'row', opacity:  this.state.fade2 }}>
+                    <Text  h4>量子</Text>
+                    <CheckBox
+                        title='Click Here'
+                        checked={true}
+                        />
+                    <CheckBox
+                        title='Click Here'
+                        checked={false}
+                        />
+                </Animated.View>
+                {
+                    this.state.load ?
+                    <Animated.View style={{flexDirection: 'row', opacity:  this.state.fade1 }}>
+                    <Text  h4>量子</Text>
+                    <Tooltip popover={<Text>Info here</Text>}>
+                        <Text>Press me</Text>
+                    </Tooltip>
+                    </Animated.View> : null
+                }
+                
+                <Animated.View style={{flexDirection: 'row', opacity:  this.state.fade2}}>
+                    <Text  h4>量子</Text>
+                    <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+                        <Slider
+                            value={this.state.value}
+                            onValueChange={value => this.setState({ value })}
+                        />
+                        <Text>Value: {this.state.value}</Text>
+                    </View>
+                </Animated.View>
+                {
+                    this.state.load ?
+                    <Animated.View style={{flexDirection: 'row', opacity:  this.state.fade1 }}>
+                        <Text  h4>量子</Text>
+                        <CheckBox
+                            title='Click Here'
+                            checked={true}
+                            />
+                        <CheckBox
+                            title='Click Here'
+                            checked={false}
+                            />
+                        <CheckBox
+                            title='Click Here'
+                            checked={true}
+                            /> 
+                    </Animated.View> : null
+                }
+                
+                <Animated.View style={{flexDirection: 'row', opacity:  this.state.fade2}}>
+                    <Text  h4>量子</Text>
+                    <Input
+                    placeholder='INPUT WITH ICON'
+                    leftIcon={{ type: 'font-awesome', name: 'chevron-left' }}
+                    />
+                </Animated.View>
+                {
+                    this.state.load ?  
+                    <Animated.View style={{flexDirection: 'row', opacity:  this.state.fade1}}>
+                        <Text  h4>量子</Text>
+                        <Rating
+                            showRating 
+                            style={{ paddingVertical: 10 }}
+                        />
+                    </Animated.View> : null
+                }
+               
+                <Button title="Solid Button" />
             </ScrollView>
           )
     }

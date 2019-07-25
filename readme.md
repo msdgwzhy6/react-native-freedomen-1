@@ -1,6 +1,8 @@
-# 已有DEMO，见 example 文件夹， 完善中 ，敬请期待
+# 文档地址
 
+[documents](http://115.159.65.195:8080/freedomen)
 
+[demo地址](https://github.com/yangaijun/react-native-freedomen/tree/master/example)
 
 # 简介
 
@@ -184,7 +186,7 @@ constructor(props) {
 componentDidMount() {
     setTimeout(() => {
         this.setState({
-            data: {
+            user: {
                 userIconUrl: 'http://pic40.nipic.com/20140331/9469669_142840860000_2.jpg'，
                 userName： '张三',
                 workName: '搬运工'
@@ -302,11 +304,6 @@ render() {
 
 ```
 
+![home](https://github.com/yangaijun/react-native-freedomen/blob/master/example/screen/home.gif)
 
-
-# 文档地址
-
-[documents](http://115.159.65.195:8080/freedomen)
-
-# 稳定版本
-	0.2.4
+![form](https://github.com/yangaijun/react-native-freedomen/blob/master/example/screen/form2.gif)

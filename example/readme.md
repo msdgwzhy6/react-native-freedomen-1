@@ -11,7 +11,7 @@ npm install
 ## step 2
 
 ```js 
-react-native run-android
+react-native run-android    or    react-native run-ios
 
 
 ```
